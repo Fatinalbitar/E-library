@@ -1,0 +1,62 @@
+﻿@model E_Library.DTOS.PaginationData<Book>
+
+@{
+    ViewData["Title"] = "Index";
+    var lookupItems = new Dictionary<int, string>
+    {
+        { 1, "Horror" },
+        { 2, "Romance" },
+        { 3, "History" },
+        { 4, "Short Story" }
+    };
+
+}
+
+<div class="container">
+
+
+    <div class="alert alert-primary" role="alert">
+        We Suggest To You
+    </div>
+
+    @foreach (var item in Model.Data)
+    {
+        <div class="card col-md-12">
+            <img class="card-img-top" src="@item.ImagePath" alt="Card image cap" height="300">
+            <div class="card-body">
+                <h5 class="card-title">@item.Name by @item.Author</h5>
+                <h6 class="card-subtitle mb-2 text-muted">@lookupItems[item.Category]</h6>
+                <p class="card-text">@item.Shortcut</p>
+                @if (item.IsAvailable)
+                {
+                    <a class="btn btn-primary" asp-action="BorrowBook" asp-route-bookId="@item.Id">Borrow</a>
+                }
+                else
+                {
+                    <button type="button" class="btn  btn-primary" disabled>Not Avilable</button>
+                }
+            </div>
+        </div>
+    }
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+
+            @if (Model.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a asp-page="/users/UserDashBoard" asp-route-pageNumber="@(Model.PageIndex -1)">Previous</a>
+                </li>
+
+            }
+            @if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a asp-page="/users/UserDashBoard" asp-route-pageNumber="@(Model.PageIndex +1)">Next</a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+
+</div>

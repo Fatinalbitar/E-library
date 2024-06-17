@@ -1,0 +1,71 @@
+﻿@using E_Library.DTOS;
+@model PaginationData<Book>
+
+@{
+    ViewData["Title"] = "Index";
+    var lookupItems = new Dictionary<int, string>
+    {
+        { 1, "Horror" },
+        { 2, "Romance" },
+        { 3, "History" },
+        { 4, "Short Story" }
+    };
+}
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
+</p>
+
+<div class="container">
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"> Name</th>
+                <th scope="col">Author</th>
+                <th scope="col">Category</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Author</td>
+                    <td>@lookupItems[item.Category]</td>
+                    <td>
+                        <a class="btn btn-info" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+
+            @if (Model.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a asp-page="/Books/Index" asp-route-pageNumber="@(Model.PageIndex - 1)">Previous</a>
+                </li>
+
+            }
+
+            @if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a asp-page="/Books/Index" asp-route-pageNumber="@(Model.PageIndex + 1)">Next</a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+
+</div>

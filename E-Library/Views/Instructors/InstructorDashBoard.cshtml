@@ -1,0 +1,100 @@
+﻿@model E_Library.DTOS.PaginationData<StudentBorrowBooks>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Book Name</th>
+                <th scope="col">Studnet Name</th>
+                <th scope="col">Studnet Mobile Number</th>
+                <th scope="col">Borrow Date</th>
+                <th scope="col">RecivedDate</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Book.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.Name)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Student.MobileNumber)
+                    </td>
+
+                    @if (item.BorrowDate.HasValue)
+                    {
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BorrowDate.Value.Date)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>--</td>
+                    }
+
+                    @if (item.RecievedDate.HasValue)
+                    {
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RecievedDate.Value.Date)
+                        </td>
+                    }
+                    else
+                    {
+                        <td>--</td>
+                    }
+
+                    <td>
+                        @if (!item.BorrowDate.HasValue)
+                        {
+                            <a class="btn btn-primary" asp-action="BorrowBook" asp-route-studentBorrowBookId="@item.Id">Borrow Student</a>
+
+                        }
+                        @if (!item.RecievedDate.HasValue && item.BorrowDate.HasValue)
+                        {
+                            <a class="btn btn-primary" asp-action="RecieveBook" asp-route-studentBorrowBookId="@item.Id">Revieve From Studnet</a>
+                        }
+                    </td>
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+
+            @if (Model.HasPreviousPage)
+            {
+                <li class="page-item">
+                    <a asp-page="/Instructors/InstructorDashBoard" asp-route-pageNumber="@(Model.PageIndex - 1)">Previous</a>
+                </li>
+
+            }
+            @if (Model.HasNextPage)
+            {
+                <li class="page-item">
+                    <a asp-page="/Instructors/InstructorDashBoard" asp-route-pageNumber="@(Model.PageIndex + 1)">Next</a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+
+</div>

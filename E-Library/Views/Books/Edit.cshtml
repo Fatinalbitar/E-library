@@ -1,0 +1,77 @@
+﻿@model E_Library.Models.Book
+
+@{
+    ViewData["Title"] = "Edit";
+    var lookupItems = new Dictionary<int, string>
+    {
+        { 1, "Horror" },
+        { 2, "Romance" },
+        { 3, "History" },
+        { 4, "Short Story" }
+    };
+
+}
+
+<div class="alert alert-primary" role="alert">
+    Edit A Book
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Author" class="control-label"></label>
+                <input asp-for="Author" class="form-control" />
+                <span asp-validation-for="Author" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Shortcut" class="control-label"></label>
+                <input asp-for="Shortcut" class="form-control" />
+                <span asp-validation-for="Shortcut" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>
+                <input asp-for="ImagePath" class="form-control" />
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="Category" name="Category" class="form-control">
+                    <option value="">Select an option</option>
+                    @foreach (var item in lookupItems)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

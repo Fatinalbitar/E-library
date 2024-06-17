@@ -1,0 +1,26 @@
+﻿@model E_Library.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+    var lookupItems = new Dictionary<int, string>
+    {
+        { 1, "Horror" },
+        { 2, "Romance" },
+        { 3, "History" },
+        { 4, "Short Story" }
+    };
+}
+
+<div class="wraper">
+
+    <div class="card">
+        <img class="card-img-top" src="@Model.ImagePath" alt="Card image cap" width="500" height="500">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name by @Model.Author</h5>
+            <h6 class="card-subtitle mb-2 text-muted">@lookupItems[Model.Category]</h6>
+            <p class="card-text">@Model.Shortcut</p>
+        </div>
+    </div>
+
+    <a asp-action="Index">Back to List</a>
+</div>
